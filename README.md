@@ -1,2 +1,2 @@
-# Elysium
-Elysium CMS is een headless cms gehost op Europese bodem
+# Centaur CMS
+Centaur CMS is een headless cms gehost op Europese bodem
