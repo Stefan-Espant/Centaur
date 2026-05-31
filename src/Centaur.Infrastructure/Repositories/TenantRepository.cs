@@ -19,9 +19,11 @@ public class TenantRepository(CentaurDbContext context, TenantSchemaHelper schem
 
     public async Task<Tenant> CreateAsync(Tenant tenant)
     {
+        await using var transaction = await context.Database.BeginTransactionAsync();
         context.Tenants.Add(tenant);
         await context.SaveChangesAsync();
         await schemaHelper.CreateTenantSchemaAsync(tenant.Slug);
+        await transaction.CommitAsync();
         return tenant;
     }
 

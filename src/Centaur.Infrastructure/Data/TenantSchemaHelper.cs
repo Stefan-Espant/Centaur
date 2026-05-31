@@ -8,6 +8,9 @@ public class TenantSchemaHelper(CentaurDbContext context)
     public async Task CreateTenantSchemaAsync(string slug)
     {
         var schemaName = SlugToSchema(slug);
+        if (!System.Text.RegularExpressions.Regex.IsMatch(schemaName, @"^[a-z][a-z0-9_]*$"))
+            throw new ArgumentException($"Ongeldige schema naam: {schemaName}");
+
         await context.Database.ExecuteSqlRawAsync($$"""
             CREATE SCHEMA IF NOT EXISTS "{{schemaName}}";
             CREATE TABLE IF NOT EXISTS "{{schemaName}}".content_types (

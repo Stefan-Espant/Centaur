@@ -9,7 +9,7 @@ namespace Centaur.Infrastructure.Repositories;
 public class UserRepository(CentaurDbContext context) : IUserRepository
 {
     public Task<User?> GetByEmailAsync(string email) =>
-        context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        context.Users.FirstOrDefaultAsync(u => u.Email == email.ToLowerInvariant());
 
     public Task<User?> GetByIdAsync(Guid id) =>
         context.Users.FindAsync(id).AsTask();
