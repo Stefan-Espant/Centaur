@@ -25,6 +25,7 @@ builder.Services.AddScoped<IAuthService>(_ => new AuthService(
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opts =>
     {
+        opts.MapInboundClaims = false;
         opts.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,

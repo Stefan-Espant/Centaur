@@ -11,40 +11,41 @@ public class TenantSchemaHelper(CentaurDbContext context)
         if (!System.Text.RegularExpressions.Regex.IsMatch(schemaName, @"^[a-z][a-z0-9_]*$"))
             throw new ArgumentException($"Ongeldige schema naam: {schemaName}");
 
-        await context.Database.ExecuteSqlRawAsync($$"""
-            CREATE SCHEMA IF NOT EXISTS "{{schemaName}}";
-            CREATE TABLE IF NOT EXISTS "{{schemaName}}".content_types (
-                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-                name VARCHAR(255) NOT NULL,
-                slug VARCHAR(100) NOT NULL UNIQUE,
-                fields JSONB NOT NULL DEFAULT '[]',
-                created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-            );
-            CREATE TABLE IF NOT EXISTS "{{schemaName}}".entries (
-                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-                content_type_id UUID NOT NULL REFERENCES "{{schemaName}}".content_types(id) ON DELETE CASCADE,
-                data JSONB NOT NULL DEFAULT '{}',
-                status VARCHAR(20) NOT NULL DEFAULT 'draft',
-                published_at TIMESTAMPTZ,
-                created_by UUID,
-                created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-                updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-            );
-            CREATE TABLE IF NOT EXISTS "{{schemaName}}".media (
-                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-                filename VARCHAR(500) NOT NULL,
-                url VARCHAR(1000) NOT NULL,
-                mime_type VARCHAR(100),
-                size BIGINT,
-                alt VARCHAR(500),
-                created_by UUID,
-                created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-            );
-            CREATE TABLE IF NOT EXISTS "{{schemaName}}".settings (
-                key VARCHAR(255) PRIMARY KEY,
-                value JSONB NOT NULL
-            );
-            """);
+        // EF Core's ExecuteSqlRawAsync uses String.Format internally so curly braces must be escaped
+        var sql =
+            $"CREATE SCHEMA IF NOT EXISTS \"{schemaName}\";\n" +
+            $"CREATE TABLE IF NOT EXISTS \"{schemaName}\".content_types (\n" +
+            "    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n" +
+            "    name VARCHAR(255) NOT NULL,\n" +
+            "    slug VARCHAR(100) NOT NULL UNIQUE,\n" +
+            "    fields JSONB NOT NULL DEFAULT '[]',\n" +
+            "    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()\n" +
+            ");\n" +
+            $"CREATE TABLE IF NOT EXISTS \"{schemaName}\".entries (\n" +
+            "    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n" +
+            $"    content_type_id UUID NOT NULL REFERENCES \"{schemaName}\".content_types(id) ON DELETE CASCADE,\n" +
+            "    data JSONB NOT NULL DEFAULT '{{}}'::jsonb,\n" +
+            "    status VARCHAR(20) NOT NULL DEFAULT 'draft',\n" +
+            "    published_at TIMESTAMPTZ,\n" +
+            "    created_by UUID,\n" +
+            "    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),\n" +
+            "    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()\n" +
+            ");\n" +
+            $"CREATE TABLE IF NOT EXISTS \"{schemaName}\".media (\n" +
+            "    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n" +
+            "    filename VARCHAR(500) NOT NULL,\n" +
+            "    url VARCHAR(1000) NOT NULL,\n" +
+            "    mime_type VARCHAR(100),\n" +
+            "    size BIGINT,\n" +
+            "    alt VARCHAR(500),\n" +
+            "    created_by UUID,\n" +
+            "    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()\n" +
+            ");\n" +
+            $"CREATE TABLE IF NOT EXISTS \"{schemaName}\".settings (\n" +
+            "    key VARCHAR(255) PRIMARY KEY,\n" +
+            "    value JSONB NOT NULL\n" +
+            ");";
+        await context.Database.ExecuteSqlRawAsync(sql);
     }
 
     public static string SlugToSchema(string slug) =>
