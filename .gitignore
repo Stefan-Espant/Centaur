@@ -6,3 +6,6 @@ bin/
 obj/
 *.user
 .vs/
+
+# Geheime configuratiebestanden (bevatten wachtwoorden)
+src/Centaur.Api/appsettings.Development.json
