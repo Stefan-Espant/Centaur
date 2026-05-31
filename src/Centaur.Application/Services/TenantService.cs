@@ -5,7 +5,7 @@ using Centaur.Domain.Enums;
 
 namespace Centaur.Application.Services;
 
-public class TenantService(ITenantRepository tenantRepository, IUserRepository userRepository)
+public class TenantService(ITenantRepository tenantRepository, IUserRepository userRepository) : ITenantService
 {
     public async Task<TenantDto> CreateAsync(CreateTenantRequest request)
     {
@@ -24,7 +24,7 @@ public class TenantService(ITenantRepository tenantRepository, IUserRepository u
         {
             Id = Guid.NewGuid(),
             Email = request.AdminEmail,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.AdminPassword),
+            PasswordHash = await Task.Run(() => BCrypt.Net.BCrypt.HashPassword(request.AdminPassword)),
             Role = UserRole.Admin,
             TenantId = tenant.Id,
             CreatedAt = DateTime.UtcNow

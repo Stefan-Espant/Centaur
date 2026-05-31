@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Centaur.Application.Services;
 
-public class AuthService(IUserRepository userRepository, string jwtSecret)
+public class AuthService(IUserRepository userRepository, string jwtSecret) : IAuthService
 {
     private readonly string _jwtSecret = Encoding.UTF8.GetByteCount(jwtSecret) >= 32
         ? jwtSecret
