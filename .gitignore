@@ -1,2 +1,8 @@
 .superpowers/
 .worktrees/
+
+# .NET build output
+bin/
+obj/
+*.user
+.vs/

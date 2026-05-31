@@ -1,0 +1,6 @@
+@Centaur.Api_HostAddress = http://localhost:5197
+
+GET {{Centaur.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
