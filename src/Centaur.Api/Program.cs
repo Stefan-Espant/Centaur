@@ -73,6 +73,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<Centaur.Api.Middleware.TenantSchemaMiddleware>();
 app.MapControllers();
 app.Run();
 
