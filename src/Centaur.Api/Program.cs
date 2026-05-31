@@ -41,6 +41,30 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Seed SuperAdmin bij eerste opstart
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<CentaurDbContext>();
+    await db.Database.MigrateAsync();
+
+    var superAdminEmail = builder.Configuration["SuperAdmin:Email"] ?? "superadmin@centaur.nl";
+    var superAdminPassword = builder.Configuration["SuperAdmin:Password"]!;
+
+    if (!await db.Users.AnyAsync(u => u.Role == Centaur.Domain.Enums.UserRole.SuperAdmin))
+    {
+        db.Users.Add(new Centaur.Domain.Entities.User
+        {
+            Id = Guid.NewGuid(),
+            Email = superAdminEmail,
+            PasswordHash = await Task.Run(() => BCrypt.Net.BCrypt.HashPassword(superAdminPassword)),
+            Role = Centaur.Domain.Enums.UserRole.SuperAdmin,
+            TenantId = null,
+            CreatedAt = DateTime.UtcNow
+        });
+        await db.SaveChangesAsync();
+    }
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
