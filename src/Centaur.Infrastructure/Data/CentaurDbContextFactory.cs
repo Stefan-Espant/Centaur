@@ -7,9 +7,8 @@ public class CentaurDbContextFactory : IDesignTimeDbContextFactory<CentaurDbCont
 {
     public CentaurDbContext CreateDbContext(string[] args)
     {
-        // Design-time connection string voor EF migraties
-        // In productie wordt de connection string via appsettings geconfigureerd
-        var connectionString = "Host=localhost;Port=5433;Database=centaur;Username=postgres;Password=postgres";
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__Default")
+            ?? throw new InvalidOperationException("Stel de omgevingsvariabele ConnectionStrings__Default in voor EF-migraties.");
 
         var optionsBuilder = new DbContextOptionsBuilder<CentaurDbContext>();
         optionsBuilder.UseNpgsql(connectionString);
