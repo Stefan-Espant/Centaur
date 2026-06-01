@@ -40,6 +40,7 @@ builder.Services.AddScoped<Centaur.Application.Interfaces.IBlockTypeRepository, 
 builder.Services.AddScoped<BlockTypeValidator>();
 builder.Services.AddScoped<BlockTypeService>();
 builder.Services.AddScoped<EntryBlockValidator>();
+builder.Services.AddScoped<Centaur.Infrastructure.GraphQL.TenantSchemaBuilder>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opts =>

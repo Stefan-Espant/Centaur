@@ -1,5 +1,6 @@
 using Centaur.Application.DTOs;
 using Centaur.Application.Services;
+using Centaur.Infrastructure.GraphQL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,8 +9,9 @@ namespace Centaur.Api.Controllers;
 [ApiController]
 [Route("api/admin/block-types")]
 [Authorize]
-public class BlockTypesController(BlockTypeService blockTypeService) : ControllerBase
+public class BlockTypesController(BlockTypeService blockTypeService, TenantSchemaBuilder schemaBuilder) : ControllerBase
 {
+    private string TenantSlug => User.FindFirst("tenant_slug")?.Value ?? string.Empty;
     [HttpGet]
     public async Task<IActionResult> GetAll() =>
         Ok(await blockTypeService.GetAllAsync());
@@ -28,6 +30,7 @@ public class BlockTypesController(BlockTypeService blockTypeService) : Controlle
         try
         {
             var created = await blockTypeService.CreateAsync(request);
+            schemaBuilder.InvalidateCache(TenantSlug);
             return CreatedAtAction(nameof(GetBySlug), new { slug = created.Slug }, created);
         }
         catch (InvalidOperationException ex)
@@ -43,6 +46,7 @@ public class BlockTypesController(BlockTypeService blockTypeService) : Controlle
         try
         {
             var updated = await blockTypeService.UpdateAsync(slug, request);
+            schemaBuilder.InvalidateCache(TenantSlug);
             return Ok(updated);
         }
         catch (KeyNotFoundException)
@@ -62,6 +66,7 @@ public class BlockTypesController(BlockTypeService blockTypeService) : Controlle
         try
         {
             await blockTypeService.DeleteAsync(slug);
+            schemaBuilder.InvalidateCache(TenantSlug);
             return NoContent();
         }
         catch (KeyNotFoundException)
