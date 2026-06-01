@@ -1,6 +1,5 @@
 using Centaur.Application.Interfaces;
 using Centaur.Domain.Entities;
-using Centaur.Domain.Enums;
 
 namespace Centaur.Application.Tests.Helpers;
 
@@ -16,9 +15,18 @@ public class MockUserRepository : IUserRepository
     public Task<User?> GetByIdAsync(Guid id) =>
         Task.FromResult(_users.FirstOrDefault(u => u.Id == id));
 
+    public Task<IEnumerable<User>> GetByTenantIdAsync(Guid tenantId) =>
+        Task.FromResult<IEnumerable<User>>(_users.Where(u => u.TenantId == tenantId).OrderBy(u => u.Email).ToList());
+
     public Task<User> CreateAsync(User user)
     {
         _users.Add(user);
         return Task.FromResult(user);
+    }
+
+    public Task DeleteAsync(Guid id)
+    {
+        _users.RemoveAll(u => u.Id == id);
+        return Task.CompletedTask;
     }
 }
