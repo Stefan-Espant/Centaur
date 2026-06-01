@@ -36,6 +36,10 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWebsiteSettingsService, WebsiteSettingsService>();
 builder.Services.AddScoped<IAuthService>(_ => new AuthService(
     _.GetRequiredService<IUserRepository>(), jwtSecret));
+builder.Services.AddScoped<Centaur.Application.Interfaces.IBlockTypeRepository, BlockTypeRepository>();
+builder.Services.AddScoped<BlockTypeValidator>();
+builder.Services.AddScoped<BlockTypeService>();
+builder.Services.AddScoped<EntryBlockValidator>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opts =>
