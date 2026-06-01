@@ -10,7 +10,7 @@ public class BlockTypeConfiguration : IEntityTypeConfiguration<BlockType>
 {
     public void Configure(EntityTypeBuilder<BlockType> builder)
     {
-        builder.ToTable("block_types");
+        builder.ToTable("block_types", schema: (string?)null);
         builder.HasKey(bt => bt.Id);
         builder.Property(bt => bt.Name).IsRequired().HasMaxLength(255);
         builder.Property(bt => bt.Slug).IsRequired().HasMaxLength(255);

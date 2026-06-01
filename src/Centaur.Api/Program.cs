@@ -1,4 +1,5 @@
 using System.Text;
+using Centaur.Api;
 using Centaur.Application.Interfaces;
 using Centaur.Application.Services;
 using Centaur.Infrastructure.Data;
@@ -15,12 +16,14 @@ const string CorsPolicy = "CentaurAdmin";
 
 builder.Services.AddDbContext<CentaurDbContext>(opts =>
     opts.UseNpgsql(connectionString));
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ITenantSchemaAccessor, TenantSchemaAccessor>();
 
 builder.Services.AddCors(opts =>
 {
     opts.AddPolicy(CorsPolicy, policy =>
         policy
-            .WithOrigins("http://localhost:3000")
+            .WithOrigins("http://localhost:3000", "http://localhost:3001")
             .AllowAnyHeader()
             .AllowAnyMethod());
 });
@@ -29,14 +32,18 @@ builder.Services.AddScoped<TenantSchemaHelper>();
 builder.Services.AddScoped<ITenantRepository, TenantRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
+builder.Services.AddScoped<IPageRepository, PageRepository>();
+builder.Services.AddScoped<IPageDemoService, PageDemoService>();
 builder.Services.AddScoped<IWebsiteSettingsRepository, WebsiteSettingsRepository>();
 builder.Services.AddScoped<ITenantService, TenantService>();
 builder.Services.AddScoped<IApiKeyService, ApiKeyService>();
+builder.Services.AddScoped<IPageService, PageService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWebsiteSettingsService, WebsiteSettingsService>();
 builder.Services.AddScoped<IAuthService>(_ => new AuthService(
     _.GetRequiredService<IUserRepository>(), jwtSecret));
 builder.Services.AddScoped<Centaur.Application.Interfaces.IBlockTypeRepository, BlockTypeRepository>();
+builder.Services.AddScoped<IBlockTypePresetService, BlockTypePresetService>();
 builder.Services.AddScoped<BlockTypeValidator>();
 builder.Services.AddScoped<BlockTypeService>();
 builder.Services.AddScoped<EntryBlockValidator>();
@@ -51,7 +58,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret)),
             ValidateIssuer = false,
-            ValidateAudience = false
+            ValidateAudience = false,
+            RoleClaimType = "role"
         };
     });
 

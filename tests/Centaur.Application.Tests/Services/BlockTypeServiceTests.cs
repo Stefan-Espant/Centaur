@@ -12,6 +12,7 @@ public class BlockTypeServiceTests
 {
     private readonly Mock<IBlockTypeRepository> _repo = new();
     private readonly Mock<BlockTypeValidator> _validatorMock;
+    private readonly Mock<IBlockTypePresetService> _presetService = new();
     private readonly BlockTypeService _service;
 
     public BlockTypeServiceTests()
@@ -22,7 +23,8 @@ public class BlockTypeServiceTests
                       .ReturnsAsync([]);
         _validatorMock.Setup(v => v.ValidateUpdate(It.IsAny<UpdateBlockTypeRequest>()))
                       .Returns([]);
-        _service = new BlockTypeService(_repo.Object, _validatorMock.Object);
+        _presetService.Setup(service => service.EnsurePresetsAsync()).Returns(Task.CompletedTask);
+        _service = new BlockTypeService(_repo.Object, _validatorMock.Object, _presetService.Object);
     }
 
     [Fact]

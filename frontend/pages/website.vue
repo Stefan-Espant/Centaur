@@ -114,18 +114,52 @@ onMounted(load)
       </form>
 
       <section class="website-preview" :style="{ '--preview-color': settings.primaryColor }">
-        <div class="preview-topbar">
-          <div class="preview-brand">{{ settings.siteName || 'Mijn website' }}</div>
-          <div class="preview-pill">Live preview</div>
+        <div class="preview-browserbar">
+          <span />
+          <span />
+          <span />
         </div>
-        <div class="preview-hero">
-          <div class="preview-kicker">Website</div>
-          <h1>{{ settings.heroTitle || 'Welkom op onze website' }}</h1>
-          <p>{{ settings.heroSubtitle || 'Vertel hier kort wat bezoekers direct moeten weten.' }}</p>
-        </div>
-        <div class="preview-body">
-          <p>{{ settings.introText || 'Hier verschijnt de introductietekst van de website.' }}</p>
-          <a v-if="settings.contactEmail" :href="`mailto:${settings.contactEmail}`">Contact opnemen</a>
+
+        <div class="preview-page">
+          <header class="preview-site-header">
+            <div class="preview-brand">{{ settings.siteName || 'Mijn website' }}</div>
+            <nav class="preview-nav">
+              <span>Home</span>
+              <span>Over</span>
+              <span>Contact</span>
+            </nav>
+          </header>
+
+          <section class="preview-hero">
+            <div class="preview-kicker">Website</div>
+            <h1>{{ settings.heroTitle || 'Welkom op onze website' }}</h1>
+            <p>{{ settings.heroSubtitle || 'Vertel hier kort wat bezoekers direct moeten weten.' }}</p>
+            <div class="preview-hero-actions">
+              <a href="/">Bekijk aanbod</a>
+              <a v-if="settings.contactEmail" :href="`mailto:${settings.contactEmail}`">Contact</a>
+            </div>
+          </section>
+
+          <section class="preview-section">
+            <div class="preview-section-label">Introductie</div>
+            <div class="preview-copy">
+              <p>{{ settings.introText || 'Hier verschijnt de introductietekst van de website, netjes verwerkt in de pagina in plaats van als los blok.' }}</p>
+            </div>
+          </section>
+
+          <section class="preview-section preview-section-accent">
+            <div class="preview-section-label">Contact</div>
+            <div class="preview-contact-card">
+              <p>Bezoekers zien hier een duidelijke vervolgstap binnen dezelfde pagina-opbouw.</p>
+              <a v-if="settings.contactEmail" :href="`mailto:${settings.contactEmail}`">{{ settings.contactEmail }}</a>
+              <span v-else>Voeg een e-mailadres toe om hier een contactactie te tonen.</span>
+            </div>
+          </section>
+
+          <footer class="preview-footer">
+            <span>{{ settings.siteName || 'Mijn website' }}</span>
+            <span>Live preview</span>
+          </footer>
         </div>
       </section>
     </div>

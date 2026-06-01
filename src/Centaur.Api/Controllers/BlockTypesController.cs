@@ -1,4 +1,5 @@
 using Centaur.Application.DTOs;
+using Centaur.Application.Interfaces;
 using Centaur.Application.Services;
 using Centaur.Infrastructure.GraphQL;
 using Microsoft.AspNetCore.Authorization;
@@ -9,9 +10,17 @@ namespace Centaur.Api.Controllers;
 [ApiController]
 [Route("api/admin/block-types")]
 [Authorize]
-public class BlockTypesController(BlockTypeService blockTypeService, TenantSchemaBuilder schemaBuilder) : ControllerBase
+public class BlockTypesController(
+    BlockTypeService blockTypeService,
+    IBlockTypePresetService presetService,
+    TenantSchemaBuilder schemaBuilder) : ControllerBase
 {
     private string TenantSlug => User.FindFirst("tenant_slug")?.Value ?? string.Empty;
+
+    [HttpGet("presets")]
+    public IActionResult GetPresets() =>
+        Ok(presetService.GetPresetOverview());
+
     [HttpGet]
     public async Task<IActionResult> GetAll() =>
         Ok(await blockTypeService.GetAllAsync());

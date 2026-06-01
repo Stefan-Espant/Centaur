@@ -63,6 +63,19 @@
       @update:model-value="$emit('update:modelValue', $event)"
     />
 
+    <!-- Select -->
+    <select
+      v-else-if="field.type === 'select'"
+      :value="modelValue as string ?? ''"
+      class="form-input"
+      @change="$emit('update:modelValue', ($event.target as HTMLSelectElement).value)"
+    >
+      <option value="">Kies een optie</option>
+      <option v-for="option in selectOptions" :key="option" :value="option">
+        {{ option }}
+      </option>
+    </select>
+
     <!-- Overige typen (media, select, relation) — placeholder -->
     <div v-else style="font-size:12px;color:#888;padding:6px;border:1px dashed #ddd">
       Veldtype '{{ field.type }}' (nog niet geïmplementeerd in editor)
@@ -88,6 +101,10 @@ defineEmits<{
 }>()
 
 const allBlockTypes = ref<BlockTypeDto[]>([])
+const selectOptions = computed(() => {
+  const options = props.field.config?.options
+  return Array.isArray(options) ? options.filter((option): option is string => typeof option === 'string') : []
+})
 
 onMounted(async () => {
   if (props.field.type === 'blocks') {

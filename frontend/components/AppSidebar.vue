@@ -45,6 +45,9 @@ function initials(value: string) {
         <span class="sidebar-item-icon">◻</span> API-sleutels
       </NuxtLink>
       <div class="sidebar-section">Content</div>
+      <NuxtLink to="/pages" class="sidebar-item" :class="{ active: isActive('/pages') }">
+        <span class="sidebar-item-icon">◻</span> Pagina's
+      </NuxtLink>
       <NuxtLink to="/block-types" class="sidebar-item" :class="{ active: isActive('/block-types') }">
         <span class="sidebar-item-icon">◻</span> Bloktypen
       </NuxtLink>

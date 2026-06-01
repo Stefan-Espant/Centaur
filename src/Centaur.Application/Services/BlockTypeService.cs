@@ -7,16 +7,21 @@ using Centaur.Domain.ValueObjects;
 
 namespace Centaur.Application.Services;
 
-public class BlockTypeService(IBlockTypeRepository repository, BlockTypeValidator validator)
+public class BlockTypeService(
+    IBlockTypeRepository repository,
+    BlockTypeValidator validator,
+    IBlockTypePresetService presetService)
 {
     public async Task<List<BlockTypeDto>> GetAllAsync()
     {
+        await presetService.EnsurePresetsAsync();
         var blockTypes = await repository.GetAllAsync();
         return blockTypes.Select(ToDto).ToList();
     }
 
     public async Task<BlockTypeDto?> GetBySlugAsync(string slug)
     {
+        await presetService.EnsurePresetsAsync();
         var bt = await repository.GetBySlugAsync(slug);
         return bt is null ? null : ToDto(bt);
     }
