@@ -25,7 +25,7 @@ async function submit() {
 <template>
   <div class="auth-box">
     <div class="auth-logo">
-      <img src="/logo.svg" alt="Centaur" style="height: 48px; width: auto;" />
+      <AppLogo height="44px" />
     </div>
     <div class="auth-title">Inloggen</div>
     <form @submit.prevent="submit">
