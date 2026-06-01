@@ -1,5 +1,6 @@
 // src/Centaur.Infrastructure/Data/CentaurDbContext.cs
 using Centaur.Domain.Entities;
+using Centaur.Infrastructure.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Centaur.Infrastructure.Data;
@@ -9,10 +10,12 @@ public class CentaurDbContext(DbContextOptions<CentaurDbContext> options) : DbCo
     public DbSet<Tenant> Tenants => Set<Tenant>();
     public DbSet<User> Users => Set<User>();
     public DbSet<ApiKey> ApiKeys => Set<ApiKey>();
+    public DbSet<BlockType> BlockTypes => Set<BlockType>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema("public");
+        modelBuilder.ApplyConfiguration(new BlockTypeConfiguration());
 
         modelBuilder.Entity<Tenant>(e =>
         {

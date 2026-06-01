@@ -44,6 +44,15 @@ public class TenantSchemaHelper(CentaurDbContext context)
             $"CREATE TABLE IF NOT EXISTS \"{schemaName}\".settings (\n" +
             "    key VARCHAR(255) PRIMARY KEY,\n" +
             "    value JSONB NOT NULL\n" +
+            ");\n" +
+            $"CREATE TABLE IF NOT EXISTS \"{schemaName}\".block_types (\n" +
+            "    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n" +
+            "    name VARCHAR(255) NOT NULL,\n" +
+            "    slug VARCHAR(255) NOT NULL,\n" +
+            "    fields JSONB NOT NULL DEFAULT '[]',\n" +
+            "    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),\n" +
+            "    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),\n" +
+            $"    CONSTRAINT \"{schemaName}_block_types_slug_unique\" UNIQUE (slug)\n" +
             ");";
         await context.Database.ExecuteSqlRawAsync(sql);
     }
