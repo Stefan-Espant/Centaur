@@ -11,14 +11,29 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("Default")!;
 var jwtSecret = builder.Configuration["Jwt:Secret"]!;
+const string CorsPolicy = "CentaurAdmin";
 
 builder.Services.AddDbContext<CentaurDbContext>(opts =>
     opts.UseNpgsql(connectionString));
 
+builder.Services.AddCors(opts =>
+{
+    opts.AddPolicy(CorsPolicy, policy =>
+        policy
+            .WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
 builder.Services.AddScoped<TenantSchemaHelper>();
 builder.Services.AddScoped<ITenantRepository, TenantRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
+builder.Services.AddScoped<IWebsiteSettingsRepository, WebsiteSettingsRepository>();
 builder.Services.AddScoped<ITenantService, TenantService>();
+builder.Services.AddScoped<IApiKeyService, ApiKeyService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IWebsiteSettingsService, WebsiteSettingsService>();
 builder.Services.AddScoped<IAuthService>(_ => new AuthService(
     _.GetRequiredService<IUserRepository>(), jwtSecret));
 
@@ -72,6 +87,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(CorsPolicy);
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<Centaur.Api.Middleware.TenantSchemaMiddleware>();
