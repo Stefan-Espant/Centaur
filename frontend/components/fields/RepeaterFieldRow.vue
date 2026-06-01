@@ -35,9 +35,9 @@ function updateField(slug: string, value: unknown) {
 </script>
 
 <style scoped>
-.repeater-row td { padding: 6px 8px; vertical-align: top; }
-.drag-cell { width: 24px; cursor: grab; color: #888; }
+.repeater-row td { padding: 6px 10px; vertical-align: top; border-bottom: 1px solid rgba(200,210,230,.3); }
+.drag-cell { width: 24px; cursor: grab; color: #94a3b8; }
 .remove-cell { width: 32px; }
-.btn-icon { background: none; border: none; cursor: pointer; color: #888; }
-.btn-icon:hover { color: #1a1a1a; }
+.btn-icon { background: none; border: none; cursor: pointer; color: #94a3b8; font-size: 13px; border-radius: 5px; padding: 2px 4px; transition: color .1s, background .1s; }
+.btn-icon:hover { color: #dc2626; background: rgba(220,38,38,.08); }
 </style>

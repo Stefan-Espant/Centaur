@@ -62,21 +62,39 @@ function updateField(slug: string, value: unknown) {
 </script>
 
 <style scoped>
-.block-item { border: 1px solid #ddd; margin-bottom: 6px; }
-.block-item.is-open { border-color: #1a1a1a; }
-.block-header {
-  display: flex; align-items: center; padding: 8px 12px;
-  background: #f5f5f5; cursor: pointer; gap: 8px;
+.block-item {
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 10px;
+  margin-bottom: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(22,163,74,.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
-.block-item.is-open .block-header { background: #1a1a1a; color: #fff; }
+.block-item.is-open { border-color: rgba(22,163,74,.35); }
+.block-header {
+  display: flex;
+  align-items: center;
+  padding: 9px 12px;
+  background: rgba(255,255,255,.72);
+  cursor: pointer;
+  gap: 8px;
+  transition: background .12s;
+}
+.block-header:hover { background: rgba(255,255,255,.85); }
+.block-item.is-open .block-header {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: #fff;
+}
 .block-toggle { font-size: 10px; width: 14px; }
 .block-name { font-size: 13px; font-weight: 600; flex: 1; }
-.block-preview { font-size: 12px; color: #888; flex: 2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.block-preview { font-size: 12px; color: #94a3b8; flex: 2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.block-item.is-open .block-preview { color: rgba(255,255,255,.7); }
 .block-actions { display: flex; gap: 8px; align-items: center; }
-.drag-handle { cursor: grab; opacity: 0.5; font-size: 16px; }
-.btn-icon { background: none; border: none; cursor: pointer; font-size: 14px; opacity: 0.6; }
+.drag-handle { cursor: grab; opacity: .45; font-size: 16px; }
+.btn-icon { background: none; border: none; cursor: pointer; font-size: 13px; opacity: .55; transition: opacity .1s; }
 .btn-icon:hover { opacity: 1; }
-.block-body { padding: 16px; background: #fff; }
+.block-body { padding: 16px; background: rgba(255,255,255,.6); border-top: 1px solid rgba(255,255,255,.5); }
 .field-group { margin-bottom: 14px; }
-.field-label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 4px; }
+.field-label { display: block; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #64748b; margin-bottom: 5px; }
 </style>

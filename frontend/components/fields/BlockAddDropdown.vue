@@ -42,17 +42,39 @@ function select(bt: BlockTypeDto) {
 <style scoped>
 .block-add-dropdown { position: relative; }
 .btn-dashed {
-  width: 100%; border: 1px dashed #888; padding: 8px;
-  background: none; cursor: pointer; color: #888; font-size: 13px;
+  width: 100%;
+  border: 1px dashed rgba(22,163,74,.45);
+  border-radius: 9px;
+  padding: 9px;
+  background: rgba(255,255,255,.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  cursor: pointer;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+  transition: border-color .12s, color .12s, background .12s;
 }
-.btn-dashed:hover { border-color: #1a1a1a; color: #1a1a1a; }
+.btn-dashed:hover {
+  border-color: #16a34a;
+  color: #15803d;
+  background: rgba(22,163,74,.06);
+}
 .dropdown-menu {
   position: absolute; left: 0; right: 0; z-index: 10;
-  background: #fff; border: 1px solid #ddd; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background: rgba(255,255,255,.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.6);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(22,163,74,.12), 0 2px 6px rgba(0,0,0,.06);
+  overflow: hidden;
+  margin-top: 4px;
 }
 .dropdown-item {
-  display: block; width: 100%; padding: 10px 14px; text-align: left;
+  display: block; width: 100%; padding: 9px 14px; text-align: left;
   background: none; border: none; cursor: pointer; font-size: 13px;
+  font-weight: 500; color: #1e293b; transition: background .1s;
 }
-.dropdown-item:hover { background: #f5f5f0; }
+.dropdown-item:hover { background: rgba(22,163,74,.08); color: #15803d; }
 </style>

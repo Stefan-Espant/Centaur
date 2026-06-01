@@ -14,8 +14,7 @@ function initials(value: string) {
 <template>
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <div class="sidebar-logo-mark">C</div>
-      <div class="sidebar-logo-name">Centaur</div>
+      <img src="/logo.svg" alt="Centaur" style="height: 36px; width: auto;" />
     </div>
 
     <div class="sidebar-tenant">
