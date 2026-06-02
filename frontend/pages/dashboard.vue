@@ -41,9 +41,23 @@ const recentPages = computed(() =>
 
 // ── Activity chart ────────────────────────────────────────────────────────────
 const CHART_DAYS = 30
-const W = 600
+const chartContainer = ref<HTMLElement>()
+const W = ref(600)
 const H = 72
 const PAD_X = 0
+
+function updateChartWidth() {
+  if (chartContainer.value) W.value = chartContainer.value.offsetWidth
+}
+
+onMounted(() => {
+  updateChartWidth()
+  window.addEventListener('resize', updateChartWidth)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateChartWidth)
+})
 
 const chartDays = computed(() => {
   const today = new Date()
@@ -67,7 +81,7 @@ const chartCounts = computed(() => {
 
 const chartPoints = computed(() => {
   const max = Math.max(...chartCounts.value, 1)
-  const step = (W - PAD_X * 2) / (CHART_DAYS - 1)
+  const step = (W.value - PAD_X * 2) / (CHART_DAYS - 1)
   return chartCounts.value.map((count, i) => ({
     x: PAD_X + i * step,
     y: H - (count / max) * (H - 8) - 4,
@@ -186,8 +200,8 @@ const stats = computed(() => [
         </div>
       </div>
 
-      <div class="chart-wrap">
-        <svg :viewBox="`0 0 ${W} ${H + 20}`" preserveAspectRatio="none" class="chart-svg">
+      <div ref="chartContainer" class="chart-wrap">
+        <svg :viewBox="`0 0 ${W} ${H + 20}`" class="chart-svg">
           <defs>
             <linearGradient id="chart-fill" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="#16a34a" stop-opacity="0.25"/>
@@ -304,6 +318,22 @@ const stats = computed(() => [
 </template>
 
 <style scoped>
+.chart-panel {
+  margin-bottom: 12px;
+}
+.chart-header {
+  margin-bottom: 12px;
+}
+.chart-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+.chart-svg {
+  width: 100%;
+  height: 92px;
+  display: block;
+}
+
 .dash-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
