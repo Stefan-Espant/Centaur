@@ -202,7 +202,7 @@ function autoSlug(index: number) {
   padding: 6px 10px;
   border: 1px solid var(--color-border-subtle);
   border-radius: 8px;
-  background: var(--color-input-bg, var(--color-glass));
+  background: var(--color-glass);
   cursor: pointer;
   transition: background .12s, border-color .12s, color .12s, box-shadow .12s;
   color: #64748b;
@@ -225,7 +225,7 @@ function autoSlug(index: number) {
   align-items: center;
   gap: 6px;
   padding: 5px 10px 5px 8px;
-  background: var(--color-input-bg, var(--color-glass));
+  background: var(--color-glass);
   border: 1px solid var(--color-border-subtle);
   border-radius: 8px;
   cursor: pointer;
