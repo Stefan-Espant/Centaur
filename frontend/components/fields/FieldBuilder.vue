@@ -165,8 +165,8 @@ function autoSlug(index: number) {
   align-items: center;
   gap: 8px;
   padding: 8px 10px;
-  background: rgba(255,255,255,.65);
-  border: 1px solid rgba(255,255,255,.6);
+  background: var(--color-glass);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
 }
 
@@ -200,15 +200,15 @@ function autoSlug(index: number) {
   align-items: center;
   gap: 5px;
   padding: 6px 10px;
-  border: 1px solid rgba(200,210,230,.45);
+  border: 1px solid var(--color-border-subtle);
   border-radius: 8px;
-  background: rgba(255,255,255,.55);
+  background: var(--color-input-bg, var(--color-glass));
   cursor: pointer;
   transition: background .12s, border-color .12s, color .12s, box-shadow .12s;
   color: #64748b;
 }
 .type-btn span { font-size: 11px; font-weight: 600; white-space: nowrap; }
-.type-btn:hover { background: rgba(255,255,255,.9); color: #1e293b; border-color: rgba(22,163,74,.3); }
+.type-btn:hover { background: var(--color-glass-strong); color: var(--color-text); border-color: rgba(22,163,74,.3); }
 .type-btn.active {
   background: linear-gradient(135deg, #16a34a, #15803d);
   border-color: transparent;
@@ -225,17 +225,17 @@ function autoSlug(index: number) {
   align-items: center;
   gap: 6px;
   padding: 5px 10px 5px 8px;
-  background: rgba(255,255,255,.7);
-  border: 1px solid rgba(200,210,230,.5);
+  background: var(--color-input-bg, var(--color-glass));
+  border: 1px solid var(--color-border-subtle);
   border-radius: 8px;
   cursor: pointer;
   font-size: 12px;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--color-text);
   transition: background .12s, border-color .12s;
   justify-content: center;
 }
-.type-current:hover { background: rgba(255,255,255,.95); border-color: rgba(22,163,74,.35); }
+.type-current:hover { background: var(--color-glass-strong); border-color: rgba(22,163,74,.35); }
 .type-current .type-icon { width: 14px; height: 14px; color: #16a34a; }
 .type-chevron { width: 10px; height: 10px; margin-left: 2px; opacity: .5; transition: transform .15s; }
 .type-chevron.open { transform: rotate(180deg); }
@@ -245,6 +245,6 @@ function autoSlug(index: number) {
   grid-template-columns: repeat(4, 1fr);
   gap: 4px;
   padding: 8px 10px 10px;
-  border-top: 1px solid rgba(200,210,230,.3);
+  border-top: 1px solid var(--color-border-subtle);
 }
 </style>
