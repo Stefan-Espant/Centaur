@@ -42,7 +42,8 @@ public class PageService(
             normalized.MetaDescription,
             normalized.Body,
             now,
-            now);
+            now,
+            "draft");
 
         return await pageRepository.CreateAsync(schema, page);
     }
@@ -62,7 +63,8 @@ public class PageService(
             Slug = normalized.Slug,
             MetaDescription = normalized.MetaDescription,
             Body = normalized.Body,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            Status = NormalizeStatus(request.Status, existing.Status)
         };
 
         return await pageRepository.UpdateAsync(schema, updated);
@@ -139,6 +141,11 @@ public class PageService(
 
     private static string GetBodyJson(JsonElement body) =>
         body.ValueKind == JsonValueKind.Undefined ? "[]" : body.GetRawText();
+
+    private static string NormalizeStatus(string? requested, string? existing) =>
+        requested is "draft" or "published" or "archived" ? requested
+        : existing is "draft" or "published" or "archived" ? existing
+        : "published";
 
     private async Task<string> GetTenantSchemaAsync(Guid tenantId)
     {

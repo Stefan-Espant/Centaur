@@ -20,7 +20,7 @@ public class WebsiteSettingsServiceTests
         var result = await service.GetAsync(tenantId);
 
         Assert.Equal("Mijn website", result.SiteName);
-        Assert.Equal("#1a1a1a", result.PrimaryColor);
+        Assert.Equal("#16a34a", result.PrimaryColor);
     }
 
     [Fact]
@@ -31,13 +31,24 @@ public class WebsiteSettingsServiceTests
         var service = new WebsiteSettingsService(_tenantRepository, _settingsRepository);
 
         await service.UpdateAsync(tenantId, new WebsiteSettingsDto(
-            " Demo site ",
-            "Meta",
-            "Hero",
-            "Sub",
-            "Intro",
-            "info@example.com",
-            "#008866"));
+            SiteName: " Demo site ",
+            Tagline: "",
+            ContactEmail: "info@example.com",
+            Phone: "",
+            MetaDescription: "",
+            TitleSuffix: "",
+            PrimaryColor: "#008866",
+            SecondaryColor: "",
+            Instagram: "",
+            LinkedIn: "",
+            Facebook: "",
+            Twitter: "",
+            AnalyticsId: "",
+            CookieBannerEnabled: false,
+            CookieBannerText: "",
+            MaintenanceMode: false,
+            MaintenanceMessage: "",
+            SchemaType: "Organization"));
 
         var result = await service.GetAsync(tenantId);
         Assert.Equal("Demo site", result.SiteName);
