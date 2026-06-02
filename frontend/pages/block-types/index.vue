@@ -36,7 +36,7 @@
       </tbody>
     </table>
 
-    <div v-else-if="!error" style="background:#fff;border:1px solid #ddd;padding:2rem;text-align:center;color:#888;font-size:13px">
+    <div v-else-if="!error" class="empty-state">
       Nog geen bloktypen aangemaakt.
     </div>
   </div>
