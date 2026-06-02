@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { user, isSuperAdmin, logout } = useAuth()
 const route = useRoute()
+const { theme, toggle } = useTheme()
 
 function isActive(path: string) {
   return route.path === path || route.path.startsWith(`${path}/`)
@@ -42,9 +43,9 @@ function initials(value: string) {
       </NuxtLink>
       <NuxtLink to="/website" class="sidebar-item" :class="{ active: isActive('/website') }">
         <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="8" cy="8" r="7"/><path d="M8 1c-2 2-3 4-3 7s1 5 3 7"/><path d="M8 1c2 2 3 4 3 7s-1 5-3 7"/><line x1="1" y1="8" x2="15" y2="8"/>
+          <circle cx="8" cy="8" r="6.5"/><line x1="8" y1="1.5" x2="8" y2="14.5"/><line x1="1.5" y1="8" x2="14.5" y2="8"/><path d="M8 1.5c-2 2-3 4-3 6.5s1 4.5 3 6.5"/><path d="M8 1.5c2 2 3 4 3 6.5s-1 4.5-3 6.5"/>
         </svg>
-        Website
+        Instellingen
       </NuxtLink>
       <NuxtLink to="/users" class="sidebar-item" :class="{ active: isActive('/users') }">
         <svg class="sidebar-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -72,6 +73,22 @@ function initials(value: string) {
         Bloktypen
       </NuxtLink>
     </template>
+
+    <div class="sidebar-theme">
+      <button class="theme-toggle" :title="theme === 'dark' ? 'Schakel naar licht' : 'Schakel naar donker'" @click="toggle">
+        <svg v-if="theme === 'dark'" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="8" cy="8" r="3.5"/>
+          <line x1="8" y1="1" x2="8" y2="2.5"/><line x1="8" y1="13.5" x2="8" y2="15"/>
+          <line x1="1" y1="8" x2="2.5" y2="8"/><line x1="13.5" y1="8" x2="15" y2="8"/>
+          <line x1="3.05" y1="3.05" x2="4.11" y2="4.11"/><line x1="11.89" y1="11.89" x2="12.95" y2="12.95"/>
+          <line x1="12.95" y1="3.05" x2="11.89" y2="4.11"/><line x1="4.11" y1="11.89" x2="3.05" y2="12.95"/>
+        </svg>
+        <svg v-else viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z"/>
+        </svg>
+        <span>{{ theme === 'dark' ? 'Licht' : 'Donker' }}</span>
+      </button>
+    </div>
 
     <div class="sidebar-bottom">
       <div class="sidebar-avatar">{{ user ? initials(user.userId) : '?' }}</div>

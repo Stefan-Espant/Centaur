@@ -76,7 +76,7 @@ onMounted(() => {
 
 <style scoped>
 .repeater-field {
-  border: 1px solid rgba(255,255,255,.55);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   overflow: hidden;
   backdrop-filter: blur(20px);
@@ -88,17 +88,17 @@ onMounted(() => {
   padding: 7px 10px; text-align: left; font-size: 10px; font-weight: 600;
   text-transform: uppercase; letter-spacing: .06em; color: #64748b;
   border-bottom: 1px solid rgba(200,210,230,.4);
-  background: rgba(255,255,255,.55);
+  background: var(--color-glass);
 }
 .drag-header, .remove-header {
   width: 32px;
-  background: rgba(255,255,255,.55);
+  background: var(--color-glass);
   border-bottom: 1px solid rgba(200,210,230,.4);
 }
 .btn-add-row {
   width: 100%; padding: 9px; border: none;
   border-top: 1px solid rgba(200,210,230,.4);
-  background: rgba(255,255,255,.4);
+  background: var(--color-glass);
   cursor: pointer; font-size: 13px; font-weight: 500; color: #64748b;
   transition: background .12s, color .12s;
 }

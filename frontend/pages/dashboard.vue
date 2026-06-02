@@ -437,13 +437,13 @@ const stats = computed(() => [
   align-items: center;
   gap: 12px;
   padding: 12px;
-  background: rgba(255,255,255,.5);
+  background: var(--color-glass);
   border: 1px solid var(--color-border);
   border-radius: 10px;
   text-decoration: none;
   transition: background .12s, box-shadow .12s;
 }
-.action-card:hover { background: rgba(255,255,255,.85); box-shadow: var(--shadow-sm); }
+.action-card:hover { background: var(--color-glass-strong); box-shadow: var(--shadow-sm); }
 
 .action-icon {
   width: 38px; height: 38px; border-radius: 9px;

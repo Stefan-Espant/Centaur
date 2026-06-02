@@ -63,7 +63,7 @@ function updateField(slug: string, value: unknown) {
 
 <style scoped>
 .block-item {
-  border: 1px solid rgba(255,255,255,.55);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   margin-bottom: 6px;
   overflow: hidden;
@@ -76,12 +76,12 @@ function updateField(slug: string, value: unknown) {
   display: flex;
   align-items: center;
   padding: 9px 12px;
-  background: rgba(255,255,255,.72);
+  background: var(--color-glass);
   cursor: pointer;
   gap: 8px;
   transition: background .12s;
 }
-.block-header:hover { background: rgba(255,255,255,.85); }
+.block-header:hover { background: var(--color-glass-strong); }
 .block-item.is-open .block-header {
   background: linear-gradient(135deg, #16a34a, #15803d);
   color: #fff;
@@ -94,7 +94,7 @@ function updateField(slug: string, value: unknown) {
 .drag-handle { cursor: grab; opacity: .45; font-size: 16px; }
 .btn-icon { background: none; border: none; cursor: pointer; font-size: 13px; opacity: .55; transition: opacity .1s; }
 .btn-icon:hover { opacity: 1; }
-.block-body { padding: 16px; background: rgba(255,255,255,.6); border-top: 1px solid rgba(255,255,255,.5); }
+.block-body { padding: 16px; background: var(--color-glass); border-top: 1px solid var(--color-border-subtle); }
 .field-group { margin-bottom: 14px; }
 .field-label { display: block; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #64748b; margin-bottom: 5px; }
 </style>

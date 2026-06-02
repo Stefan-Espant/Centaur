@@ -46,7 +46,7 @@ function select(bt: BlockTypeDto) {
   border: 1px dashed rgba(22,163,74,.45);
   border-radius: 9px;
   padding: 9px;
-  background: rgba(255,255,255,.45);
+  background: var(--color-glass);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   cursor: pointer;
@@ -62,10 +62,10 @@ function select(bt: BlockTypeDto) {
 }
 .dropdown-menu {
   position: absolute; left: 0; right: 0; z-index: 10;
-  background: rgba(255,255,255,.9);
+  background: var(--color-glass-strong);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,.6);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   box-shadow: 0 8px 24px rgba(22,163,74,.12), 0 2px 6px rgba(0,0,0,.06);
   overflow: hidden;
@@ -74,7 +74,7 @@ function select(bt: BlockTypeDto) {
 .dropdown-item {
   display: block; width: 100%; padding: 9px 14px; text-align: left;
   background: none; border: none; cursor: pointer; font-size: 13px;
-  font-weight: 500; color: #1e293b; transition: background .1s;
+  font-weight: 500; color: var(--color-text); transition: background .1s;
 }
 .dropdown-item:hover { background: rgba(22,163,74,.08); color: #15803d; }
 </style>
