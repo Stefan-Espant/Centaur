@@ -7,6 +7,30 @@
       </div>
       <div class="content-actions">
         <NuxtLink to="/pages" class="btn btn-ghost">Terug</NuxtLink>
+        <button
+          v-if="form.status === 'draft' || form.status === null"
+          class="btn btn-primary"
+          :disabled="saving || loading"
+          @click="changeStatus('published')"
+        >
+          Publiceren
+        </button>
+        <button
+          v-else-if="form.status === 'published'"
+          class="btn btn-ghost"
+          :disabled="saving || loading"
+          @click="changeStatus('draft')"
+        >
+          Depubliceren
+        </button>
+        <button
+          v-else-if="form.status === 'archived'"
+          class="btn btn-ghost"
+          :disabled="saving || loading"
+          @click="changeStatus('draft')"
+        >
+          Herstellen
+        </button>
         <button class="btn btn-primary" :disabled="saving || loading" @click="save">
           {{ saving ? 'Opslaan...' : 'Wijzigingen opslaan' }}
         </button>
@@ -14,6 +38,7 @@
     </div>
 
     <div v-if="error" class="alert alert-error">{{ error }}</div>
+    <div v-if="saved" class="alert alert-success">Wijzigingen opgeslagen.</div>
 
     <div v-if="loading" class="panel" style="color:#555;font-size:14px">
       Pagina laden...
@@ -61,11 +86,13 @@ const form = reactive<SavePageRequest>({
   title: '',
   slug: '',
   metaDescription: '',
-  body: []
+  body: [],
+  status: 'draft'
 })
 
 const blockTypes = ref<BlockTypeDto[]>([])
 const error = ref('')
+const saved = ref(false)
 const loading = ref(true)
 const saving = ref(false)
 
@@ -87,6 +114,7 @@ async function load() {
     form.slug = page.slug
     form.metaDescription = page.metaDescription
     form.body = page.body ?? []
+    form.status = page.status
     blockTypes.value = availableBlockTypes
   } catch (e: unknown) {
     error.value = (e as Error).message
@@ -97,10 +125,13 @@ async function load() {
 
 async function save() {
   error.value = ''
+  saved.value = false
   saving.value = true
 
   try {
-    await update(String(route.params.id), form)
+    const result = await update(String(route.params.id), form)
+    form.status = result.status
+    saved.value = true
   } catch (e: unknown) {
     error.value = (e as Error).message
   } finally {
@@ -108,4 +139,8 @@ async function save() {
   }
 }
 
+async function changeStatus(newStatus: string) {
+  form.status = newStatus
+  await save()
+}
 </script>

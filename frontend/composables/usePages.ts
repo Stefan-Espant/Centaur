@@ -11,6 +11,7 @@ export interface PageDto {
   body: BlockInstance[]
   createdAt: string
   updatedAt: string
+  status: string | null
 }
 
 export interface SavePageRequest {
@@ -18,6 +19,7 @@ export interface SavePageRequest {
   slug: string
   metaDescription: string
   body: BlockInstance[]
+  status: string | null
 }
 
 export function usePages() {

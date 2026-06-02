@@ -57,7 +57,8 @@ const form = reactive<SavePageRequest>({
   title: '',
   slug: '',
   metaDescription: '',
-  body: []
+  body: [],
+  status: 'draft'
 })
 
 const blockTypes = ref<BlockTypeDto[]>([])
