@@ -5,7 +5,7 @@
       <NuxtLink to="/block-types" class="btn btn-ghost">Annuleren</NuxtLink>
     </div>
 
-    <form style="background:#fff;border:1px solid #ddd;padding:1.5rem" @submit.prevent="submit">
+    <form class="panel stack" @submit.prevent="submit">
       <div class="form-group">
         <label class="form-label">Naam</label>
         <input v-model="form.name" type="text" class="form-input" required placeholder="bijv. Hero" @input="autoSlug" />
@@ -15,16 +15,12 @@
         <label class="form-label">Slug</label>
         <input v-model="form.slug" type="text" class="form-input" required pattern="[a-z0-9_]+"
           placeholder="bijv. hero" />
-        <div style="font-size:11px;color:#888;margin-top:4px">
-          Alleen lowercase, cijfers en underscores. Kan niet worden gewijzigd na aanmaken.
-        </div>
+        <div class="field-hint">Alleen lowercase, cijfers en underscores. Kan niet worden gewijzigd na aanmaken.</div>
       </div>
 
       <div class="form-group">
         <label class="form-label">Velden</label>
-        <div style="font-size:12px;color:#888;margin-bottom:8px">
-          Velden worden toegevoegd via de bewerk-pagina na aanmaken.
-        </div>
+        <div class="field-hint">Velden worden toegevoegd via de bewerk-pagina na aanmaken.</div>
       </div>
 
       <div v-if="errors.length" class="alert alert-error">

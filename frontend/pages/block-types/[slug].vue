@@ -10,7 +10,7 @@
 
     <div v-if="loading" style="color:#888;padding:2rem">Laden...</div>
 
-    <form v-else style="background:#fff;border:1px solid #ddd;padding:1.5rem" @submit.prevent="submit">
+    <form v-else class="panel stack" @submit.prevent="submit">
       <div class="form-group">
         <label class="form-label">Naam</label>
         <input v-model="form.name" type="text" class="form-input" required />
