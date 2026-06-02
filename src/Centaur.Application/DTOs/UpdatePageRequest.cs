@@ -6,5 +6,6 @@ public record UpdatePageRequest(
     string Title,
     string Slug,
     string MetaDescription,
-    JsonElement Body
+    JsonElement Body,
+    string? Status
 );

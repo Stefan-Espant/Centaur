@@ -111,7 +111,8 @@ public class PageDemoService(
                 }
             }),
             now,
-            now);
+            now,
+            "published");
 
         await pageRepository.CreateAsync(tenantSchema, page);
     }

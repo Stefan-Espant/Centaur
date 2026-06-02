@@ -9,5 +9,6 @@ public record PageDto(
     string MetaDescription,
     JsonElement Body,
     DateTime CreatedAt,
-    DateTime UpdatedAt
+    DateTime UpdatedAt,
+    string? Status
 );
