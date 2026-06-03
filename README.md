@@ -1,6 +1,7 @@
 <img src="docs/logo.svg" alt="Centaur CMS" height="400" />
 
 Door: Stefan van der Kort
+
 ---
 
 ## Features
