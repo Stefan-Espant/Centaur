@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Centaur.Infrastructure.Migrations
 {
     [DbContext(typeof(CentaurDbContext))]
-    [Migration("20260603160553_AddTenantSubscriptionFields")]
+    [Migration("20260603163226_AddTenantSubscriptionFields")]
     partial class AddTenantSubscriptionFields
     {
         /// <inheritdoc />
@@ -128,6 +128,8 @@ namespace Centaur.Infrastructure.Migrations
 
                     b.HasIndex("Slug")
                         .IsUnique();
+
+                    b.HasIndex("StripeCustomerId");
 
                     b.ToTable("tenants", "public");
                 });

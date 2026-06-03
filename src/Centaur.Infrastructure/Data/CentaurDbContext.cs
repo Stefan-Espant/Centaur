@@ -26,6 +26,7 @@ public class CentaurDbContext(DbContextOptions<CentaurDbContext> options) : DbCo
             e.Property(t => t.Name).HasMaxLength(255).IsRequired();
             e.Property(t => t.SubscriptionStatus).HasMaxLength(50).HasDefaultValue("free").IsRequired();
             e.Property(t => t.StripeCustomerId).HasMaxLength(255);
+            e.HasIndex(t => t.StripeCustomerId);
             e.Property(t => t.StripeSubscriptionId).HasMaxLength(255);
         });
 

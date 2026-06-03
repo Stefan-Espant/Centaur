@@ -1,4 +1,3 @@
-﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -36,37 +35,20 @@ namespace Centaur.Infrastructure.Migrations
                 nullable: false,
                 defaultValue: "free");
 
-            migrationBuilder.CreateTable(
-                name: "block_types",
-                schema: "public",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    Slug = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    Fields = table.Column<string>(type: "jsonb", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_block_types", x => x.Id);
-                });
-
             migrationBuilder.CreateIndex(
-                name: "IX_block_types_Slug",
+                name: "IX_tenants_StripeCustomerId",
                 schema: "public",
-                table: "block_types",
-                column: "Slug",
-                unique: true);
+                table: "tenants",
+                column: "StripeCustomerId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "block_types",
-                schema: "public");
+            migrationBuilder.DropIndex(
+                name: "IX_tenants_StripeCustomerId",
+                schema: "public",
+                table: "tenants");
 
             migrationBuilder.DropColumn(
                 name: "StripeCustomerId",
