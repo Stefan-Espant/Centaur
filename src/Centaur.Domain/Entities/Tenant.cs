@@ -7,6 +7,9 @@ public class Tenant
     public string Slug { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
+    public string SubscriptionStatus { get; set; } = "free";
+    public string? StripeCustomerId { get; set; }
+    public string? StripeSubscriptionId { get; set; }
 
     public ICollection<User> Users { get; set; } = new List<User>();
     public ICollection<ApiKey> ApiKeys { get; set; } = new List<ApiKey>();
