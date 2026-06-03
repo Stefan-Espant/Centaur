@@ -19,11 +19,14 @@ builder.Services.AddDbContext<CentaurDbContext>(opts =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ITenantSchemaAccessor, TenantSchemaAccessor>();
 
+var corsOrigins = (builder.Configuration["Cors:Origins"] ?? "http://localhost:3000,http://localhost:3001")
+    .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
 builder.Services.AddCors(opts =>
 {
     opts.AddPolicy(CorsPolicy, policy =>
         policy
-            .WithOrigins("http://localhost:3000", "http://localhost:3001")
+            .WithOrigins(corsOrigins)
             .AllowAnyHeader()
             .AllowAnyMethod());
 });
