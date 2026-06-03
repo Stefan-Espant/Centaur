@@ -1,8 +1,6 @@
 <p align="left">
-  <img src="docs/logo.svg" alt="Centaur CMS" height="200" />
+  <img src="docs/logo.svg" alt="Centaur CMS" height="400" />
 </p>
-
-<p align="center">Een headless CMS gebouwd op .NET 8 en Nuxt 3, gehost op Europese bodem.<br>Multi-tenant, API-first en voorzien van een visuele pagebuilder.</p>
 
 ---
 
